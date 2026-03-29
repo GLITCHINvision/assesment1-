@@ -1,0 +1,6 @@
+# Security
+.env
+__pycache__/
+*.db
+growify_database.db
+raw_data/
