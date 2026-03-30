@@ -6,28 +6,27 @@ import os
 from dotenv import load_dotenv
 import re
 
-# ==========================================
+
 # Phase 1: Waking up the AI
-# ==========================================
-# We use a .env file to hide our secret API key so no one steals it.
+
 load_dotenv()
 API_KEY = os.getenv("GEMINI_API_KEY")
 
-# If you forgot to paste your key into the .env file, the app stops here and warns you.
+
 if not API_KEY:
     st.error("Hold up! I'm missing the Gemini API Key. Please paste it into your `.env` file.")
     st.stop()
 
-# Tell Gemini to wake up and start using our free-tier model that we proved works!
+# Tell Gemini to wake up and start using our free tier model that we proved works!
 genai.configure(api_key=API_KEY)
 model = genai.GenerativeModel('gemini-2.5-flash') 
 
 # Here's where our perfectly cleaned database lives 
 DB_PATH = "growify_database.db"
 
-# ==========================================
+
 # Phase 2: Building the Robot's SQL Brain
-# ==========================================
+
 def get_db_schema():
     """This grabs the column names from our database so the AI knows exactly what tables exist."""
     try:
@@ -46,7 +45,7 @@ def get_db_schema():
             table_name = table[0]
             cursor.execute(f"PRAGMA table_info({table_name});")
             columns = cursor.fetchall()
-            col_details = [f"{col[1]} ({col[2]})" for col in columns] # "Name (Type)" -> "Spend (DECIMAL)"
+            col_details = [f"{col[1]} ({col[2]})" for col in columns] 
             schema += f"Table: {table_name}\nColumns: {', '.join(col_details)}\n\n"
             
         conn.close()
@@ -64,7 +63,7 @@ def execute_sql(query):
     except Exception as e:
         return str(e) # If the AI wrote broken SQL, we catch the error instead of crashing
 
-# ==========================================
+
 # Phase 3: The AI Translators
 # ==========================================
 def text_to_sql(user_question, chat_history):
@@ -109,11 +108,11 @@ def sql_result_to_insight(user_question, raw_sql, sql_results):
     response = model.generate_content(prompt)
     return response.text
 
-# ==========================================
+
 # Phase 4: Setting up the Web Screen (Streamlit)
-# ==========================================
+
 st.set_page_config(page_title="Growify AI Insight Tool", layout="wide")
-st.title("📈 Growify Digital - AI Insight Tool")
+st.title(" Growify Digital - AI Insight Tool")
 st.markdown("ask me anything about our clean Shopify stats or the dirty Facebook ad performance. The AI translates everything for you instantly.")
 
 # Create a memory box so the chat interface remembers what we said earlier
