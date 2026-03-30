@@ -1,7 +1,5 @@
 # Power BI Connection & DAX Guide
 
-Since I cannot physically construct the `.pbix` file on your machine via a script, use this guide to execute **Task 3 & 4**. Once done, you will have completed the Power BI requirements flawlessly.
-
 ## Step 1: Connecting your SQL "Single Source of Truth"
 1. Open Power BI Desktop.
 2. Select **Get Data** > **More** > **ODBC**.
