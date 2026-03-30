@@ -1,4 +1,6 @@
-pandas==2.2.1
+setuptools
+wheel
+pandas==2.2.2
 numpy==1.26.4
 streamlit==1.32.2
 google-generativeai==0.4.1
